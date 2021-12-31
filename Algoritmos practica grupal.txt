@@ -1,0 +1,180 @@
+#include <iostream>
+
+using namespace std;
+ 
+ template<class T>
+ class Nodo
+ {
+    public:
+        T  m_Dato;
+        Nodo<T> * m_pSig;
+    
+        
+    public:
+       Nodo(T d)
+       {
+          m_Dato = d;
+          m_pSig =0;
+       }
+ };
+ 
+ template<class T>
+ class List
+ {
+     private:
+          Nodo<T> * m_pHead;
+          Nodo<T> *pActual;
+     public:  
+        List()
+        {
+           m_pHead = 0;
+        }    
+        Nodo<T>*getHead()const{
+            return this->m_pHead;
+        }
+        
+        Nodo<T>*getActual()const{
+            return this->pActual;
+        }
+        void setActual(Nodo<T>*aux){
+            this->pActual=aux;
+        }
+       void push_front(T d)
+       {
+            if(!m_pHead)  m_pHead =  new Nodo<T>(d);
+            else 
+            {
+                 Nodo<T> * p_tmp =  new Nodo<T>(d);
+                 p_tmp->m_pSig = m_pHead;
+                 m_pHead = p_tmp; 			
+            }        
+       }
+       void push_back(T d)
+       {
+           if(!m_pHead)  m_pHead =  new Nodo<T>(d);
+           else 
+           { 
+              Nodo<T> * tmp = m_pHead;
+              while(tmp->m_pSig) 
+                  tmp=tmp->m_pSig;
+              tmp->m_pSig = new Nodo<T>(d);
+                 	 
+           }  
+       }
+       bool find(T d)
+       {
+           Nodo<T> * tmp = m_pHead;
+           while(tmp) 
+           {
+                    if(tmp->m_Dato == d) return true; 
+                    tmp = tmp->m_pSig;
+                   
+           } 
+            return false;
+           
+       } 
+       void print()
+       {
+           Nodo<T> * tmp = m_pHead;
+           
+           for( ;tmp ; tmp = tmp->m_pSig) 
+                    cout<<tmp->m_Dato<<"->";
+           cout<<endl;        
+            
+       } 
+       void printRef()
+       {
+           Nodo<T> * tmp = m_pHead;
+           
+           for( ;tmp ; tmp = tmp->m_pSig) 
+                    cout<<tmp<<"->";
+           cout<<endl;        
+            
+       } 
+       
+       // print recursivo
+       //  add recursivo(siempre al final)
+       // find recursivo
+      // delete_front
+      //  delete_back
+      // L1.Union(L2)  L1={1,2,3}  L2={3,1,5}   L1.Union(L2) ={1,2,3,5}  
+      // L2.Inter(L2)
+        //Auxiliaar Bool Finish
+    
+      //vod Begin() que coloca el puntero pActual a la cabeza de la lista.
+    void Begin(){
+        this->pActual=this->m_pHead;
+    }
+
+      //void Last() que coloca el puntero pActual a al final de la lista.
+    void Last(){
+        Nodo<T>*aux=this->m_pHead;
+        if(m_pHead==nullptr){
+            this->pActual=nullptr;
+        }
+            
+        else{
+            while(pActual->m_pSig!=nullptr){
+                this->pActual=this->pActual->m_pSig;
+            }
+            
+        }
+        
+    }
+
+      //void Next() que mueve el puntero al siguiente nodo.
+      void Next(){
+          if(pActual!=nullptr){
+            this->pActual=this->pActual->m_pSig;
+          }
+          else{
+              return;
+          }
+      }
+
+      //void Previus() que mueve el puntero al nodo anterior.
+        void Previus(){
+            Nodo<T>*tmp=this->m_pHead;
+            if(this->m_pHead==nullptr){
+                return;
+            }
+            while(tmp->m_pSig!=this->pActual){
+                tmp=tmp->m_pSig;
+            }
+            pActual=tmp;
+        }
+      //T GetDato() que retorna el dato apuntado por pActial.
+        T GetDato() {
+            if(this->m_pHead==nullptr || pActual==nullptr){
+                return 0;
+            }
+            else{
+                return this->pActual->m_Dato;
+            }
+        }
+        
+ 
+ };
+
+
+
+void PrintIT()
+       {
+           if(!m_pHead) return;
+           this->Begin();
+           while(pActual)
+           {
+               cout<<pActual->m_Dato<<" ";
+               this->Next();
+           }
+       }
+       void PrintIT2()
+       {
+           if(!m_pHead) return;
+           this->Last();
+            while(pActual)
+            {
+                cout<<pActual->m_Dato<<" ";
+                this->Previus();
+            }
+        }
